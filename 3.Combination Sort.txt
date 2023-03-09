@@ -1,0 +1,76 @@
+import java.util.*;
+public class CombinationSort
+ {
+
+    public static void main(String[] args) 
+{
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter the list of strings: ");
+        String[] arr = sc.nextLine().split(",");
+        List<String> inputList = Arrays.asList(arr);
+        List<String> l1 = combinationSort(inputList);
+        List<String> l2 = l2Sort(l1);
+        System.out.println("L1 : " + l1);
+        System.out.println("L2 : " + l2);
+    }
+
+    public static List<String> combinationSort(List<String> inputList) 
+{
+        Map<Character, List<String>> map = new HashMap<>();
+        for (String s : inputList)
+ {
+            char c = s.charAt(0);
+            map.putIfAbsent(c, new ArrayList<>());
+            map.get(c).add(s);
+        }
+        List<String> l1 = new ArrayList<>();
+        for (char c = 'a'; c <= 'z'; c++) 
+{
+            if (map.containsKey(c))
+ {
+                List<String> list = map.get(c);
+                Collections.sort(list, new Comparator<String>() 
+{
+                    @Override
+                    public int compare(String s1, String s2) 
+{
+                        return s1.substring(1).compareTo(s2.substring(1));
+                    }
+                });
+                l1.addAll(list);
+            }
+        }
+        return l1;
+    }
+
+    public static List<String> l2Sort(List<String> l1) 
+{
+        List<String> l2 = new ArrayList<>();
+        Map<Character, List<String>> map = new HashMap<>();
+        for (String s : l1) 
+{
+            char c = s.charAt(0);
+            map.putIfAbsent(c, new ArrayList<>());
+            map.get(c).add(s);
+        }
+        for (char c = 'a'; c <= 'z'; c++) 
+{
+            if (map.containsKey(c)) 
+{
+                List<String> list = map.get(c);
+                Collections.sort(list, new Comparator<String>()
+ {
+                    @Override
+                    public int compare(String s1, String s2)
+ {
+                        int num1 = Integer.parseInt(s1.substring(1));
+                        int num2 = Integer.parseInt(s2.substring(1));
+                        return Integer.compare(num2, num1);
+                    }
+                });
+                l2.addAll(list);
+            }
+        }
+        return l2;
+    }
+}

@@ -1,0 +1,40 @@
+import java.io.*;
+public class Main 
+{
+public static void main(String[] args) 
+{
+try 
+{
+
+BufferedReader fileReader = new BufferedReader(new FileReader("employees.csv"));       
+BufferedWriter managersFileWriter = new BufferedWriter(new FileWriter("managers.csv"));
+BufferedWriter singleNameEmployeesFileWriter = new BufferedWriter(new FileWriter("single_name_employees.csv"));
+String line;
+while ((line = fileReader.readLine()) != null)
+ { 
+            String[] details = line.trim().split(",");
+            String name = details[0];
+            String role = details[1];
+            String division = details[2];
+            if (role.equals("Manager") && division.equals("R&D")) 
+            {
+               
+                managersFileWriter.write(line + "\n");
+            }
+          
+            if (name.trim().split(" ").length == 1)
+            {
+               
+                singleNameEmployeesFileWriter.write(line + "\n");
+            }
+        }
+        fileReader.close();
+        managersFileWriter.close();
+        singleNameEmployeesFileWriter.close();
+
+    } catch (IOException e) 
+{
+        e.printStackTrace();
+    }
+}
+}
